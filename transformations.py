@@ -31,7 +31,7 @@ class NegateTransformation(Transformation):
         super().__init__()
 
     def transform_image(self, image: Image):
-        image = ImageOps.invert(image)
+        image = ImageOps.invert(image.convert('RGB'))
 
         if self.next is None:
             return image

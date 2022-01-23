@@ -1,7 +1,9 @@
 from ui import App
+from camera import Webcam
 
 def main():
-    application = App(title='camera converter', framerate=60)
+    webcam = Webcam(default_img='loading.png', framerate=60)
+    application = App('camera converter', webcam)
 
 if __name__ == '__main__':
     main()

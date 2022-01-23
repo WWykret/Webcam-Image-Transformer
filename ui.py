@@ -1,43 +1,36 @@
 import tkinter as tk
-import cv2
-from PIL import Image, ImageTk
+from PIL import ImageTk
+from camera import Webcam
 
 class App:
-    def __init__(self, title: str, framerate: int):
+    def __init__(self, title: str, webcam: Webcam):
+        self.webcam = webcam
+
         self.root = tk.Tk()
         self.root.resizable(False, False)
         self.root.title('camera converter')
 
         self.setupUI()
-        
-        self.framerate = framerate
-        self.vc = cv2.VideoCapture(0)
-        self.read_cam_input()
+
+        self.update_img()
 
         self.root.mainloop()
 
     def foo(self):
         pass
 
-    def read_cam_input(self):
-        if self.vc.isOpened():
-            _, frame = self.vc.read()
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            cam_frame = Image.fromarray(frame)
-        else:
-            cam_frame = Image.open('loading.png')
-
-        new_cam_img = ImageTk.PhotoImage(cam_frame)
+    def update_img(self):
+        new_cam_img = ImageTk.PhotoImage(self.webcam.get_camera_frame())
         self.cam_img_label.configure(image=new_cam_img)
         self.cam_img_label.image = new_cam_img
 
-        self.root.after(1000 // self.framerate, self.read_cam_input)
+        self.root.after(1000 // self.webcam.framerate, self.update_img)
 
     def setupUI(self):
         self.canvas = tk.Canvas(self.root)
         self.canvas.grid(columnspan=2, padx = 10, pady = 10)
 
-        cam_img = ImageTk.PhotoImage(Image.open('loading.png'))
+        cam_img = ImageTk.PhotoImage(self.webcam.get_default_img())
         self.cam_img_label = tk.Label(self.root, image=cam_img)
         self.cam_img_label.image = cam_img
         self.cam_img_label.grid(columnspan=2, column = 0, row = 0)

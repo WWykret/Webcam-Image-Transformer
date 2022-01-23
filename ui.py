@@ -4,9 +4,9 @@ from camera import Webcam
 from imageTransformers import ImageTransformer, ImageTransformerBuilder
 
 class App:
-    def __init__(self, title: str, webcam: Webcam, default_transformer: ImageTransformer):
+    def __init__(self, title: str, webcam: Webcam, default_image_transformer: ImageTransformer):
         self.webcam = webcam
-        self.img_transformer = default_transformer
+        self.img_transformer = default_image_transformer
 
         self.root = tk.Tk()
         self.root.resizable(False, False)
@@ -18,7 +18,22 @@ class App:
 
         self.root.mainloop()
 
-    def foo(self):
+    def apply_transformations(self):
+        new_transformation_builder = ImageTransformerBuilder()
+        
+        if self.flipXChBox.get() == 1:
+            new_transformation_builder.flip_on_axis('y')
+        if self.flipYChBox.get() == 1:
+            new_transformation_builder.flip_on_axis('x')
+        if self.showEdgesChBox.get() == 1:
+            new_transformation_builder.detect_edges()
+        if self.makeNegativeChBox.get() == 1:
+            new_transformation_builder.negate_image()
+
+        self.img_transformer = new_transformation_builder.build()
+
+
+    def save_image(self):
         pass
 
     def update_img(self):
@@ -54,8 +69,8 @@ class App:
         self.transformBox4 = tk.Checkbutton(self.root, text='Invert colors', variable=self.makeNegativeChBox, onvalue=1, offvalue=0)
         self.transformBox4.grid(column=1, row = 2, sticky = 'w')
 
-        self.saveBtn = tk.Button(self.root, text='Save image', command=self.foo)
+        self.saveBtn = tk.Button(self.root, text='Save image', command=self.save_image)
         self.saveBtn.grid(column=0, row=3, sticky = 'nesw')
 
-        self.applyBtn = tk.Button(self.root, text='Apply filters', command=self.foo)
+        self.applyBtn = tk.Button(self.root, text='Apply filters', command=self.apply_transformations)
         self.applyBtn.grid(column=1, row=3, sticky = 'nesw')

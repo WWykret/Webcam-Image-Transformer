@@ -8,7 +8,7 @@ class App:
 
         self.root = tk.Tk()
         self.root.resizable(False, False)
-        self.root.title('camera converter')
+        self.root.title(title)
 
         self.setupUI()
 

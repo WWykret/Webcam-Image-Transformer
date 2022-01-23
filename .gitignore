@@ -1,4 +1,4 @@
 env/*
 *.gif
 __pycache__/*
-images/*
+saved_images/*

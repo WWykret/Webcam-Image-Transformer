@@ -38,7 +38,7 @@ class App:
         counter = 0
         frame_to_save = self.webcam.get_camera_frame(self.img_transformer)
 
-        while not self.image_saver.save_image(f'images/camera_saved_{counter}.jpg', frame_to_save):
+        while not self.image_saver.save_image(f'saved_images/camera_saved_{counter}.jpg', frame_to_save):
             counter += 1
 
     def update_img(self):

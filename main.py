@@ -1,9 +1,9 @@
 import tkinter as tk
-# from tkinter import *
-# from tkinter import ttk
+import cv2
 from PIL import Image, ImageTk
 
-img = Image.open("wojak.gif").resize((400, 400))
+framerate = 60
+vc = cv2.VideoCapture(0)
 
 def bar():
     pass
@@ -11,15 +11,38 @@ def bar():
 def bar2():
     pass
 
+if vc.isOpened():
+    _, frame = vc.read()
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    cam_frame = Image.fromarray(frame)
+else:
+    cam_frame = Image.open("wojak.gif").resize((400, 400))
+
 root = tk.Tk()
 
-canvas = tk.Canvas(root, width = 400, height = 400)
+canvas = tk.Canvas(root)
 canvas.grid(columnspan=2, padx = 10, pady = 10)
 
-cam_img = ImageTk.PhotoImage(Image.open("wojak.gif").resize((400, 400)))
+cam_img = ImageTk.PhotoImage(cam_frame)
 cam_img_label = tk.Label(image=cam_img)
 cam_img_label.image = cam_img
 cam_img_label.grid(columnspan=2, column = 0, row = 0)
+
+def getFrame():
+    if vc.isOpened():
+        _, frame = vc.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        cam_frame = Image.fromarray(frame)
+    else:
+        cam_frame = Image.open("wojak.gif").resize((400, 400))
+
+    new_cam_img = ImageTk.PhotoImage(cam_frame)
+    cam_img_label.configure(image=new_cam_img)
+    cam_img_label.image = new_cam_img
+
+    root.after(int(1000 / framerate), getFrame)
+
+getFrame()
 
 def foo():
     pass

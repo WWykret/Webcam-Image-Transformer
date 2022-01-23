@@ -16,9 +16,10 @@ if vc.isOpened():
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     cam_frame = Image.fromarray(frame)
 else:
-    cam_frame = Image.open("wojak.gif").resize((400, 400))
+    cam_frame = Image.open("loading.png")
 
 root = tk.Tk()
+root.resizable(False, False)
 
 canvas = tk.Canvas(root)
 canvas.grid(columnspan=2, padx = 10, pady = 10)
@@ -34,7 +35,7 @@ def getFrame():
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         cam_frame = Image.fromarray(frame)
     else:
-        cam_frame = Image.open("wojak.gif").resize((400, 400))
+        cam_frame = Image.open("loading.png")
 
     new_cam_img = ImageTk.PhotoImage(cam_frame)
     cam_img_label.configure(image=new_cam_img)

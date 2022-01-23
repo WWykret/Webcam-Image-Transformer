@@ -1,10 +1,11 @@
 import tkinter as tk
 from PIL import ImageTk
-from camera import Webcam
-from imageTransformers import ImageTransformer, ImageTransformerBuilder
+from camera import Camera
+from imageTransformers import IImageTransformer, ImageTransformerBuilder
+import os.path
 
 class App:
-    def __init__(self, title: str, webcam: Webcam, default_image_transformer: ImageTransformer):
+    def __init__(self, title: str, webcam: Camera, default_image_transformer: IImageTransformer):
         self.webcam = webcam
         self.img_transformer = default_image_transformer
 
@@ -32,16 +33,23 @@ class App:
 
         self.img_transformer = new_transformation_builder.build()
 
-
     def save_image(self):
-        pass
+        counter = 0
+        
+        while os.path.isfile(f'images/camera_saved_{counter}.jpg'):
+            counter += 1
+
+        if not os.path.isdir('images'):
+            os.mkdir('images')
+        
+        self.webcam.get_camera_frame(self.img_transformer).save(f'images/camera_saved_{counter}.jpg')
 
     def update_img(self):
         new_cam_img = ImageTk.PhotoImage(self.webcam.get_camera_frame(self.img_transformer))
         self.cam_img_label.configure(image=new_cam_img)
         self.cam_img_label.image = new_cam_img
 
-        self.root.after(1000 // self.webcam.framerate, self.update_img)
+        self.root.after(1000 // self.webcam.get_framerate(), self.update_img)
 
     def setupUI(self):
         self.canvas = tk.Canvas(self.root)

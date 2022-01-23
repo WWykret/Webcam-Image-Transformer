@@ -1,8 +1,18 @@
 from transformations import *
 
-class ImageTransformer:
+class IImageTransformer:
+    def transform_image(self, image: Image) -> Image:
+        pass
+
+    def add_transformation(self, transformation: Transformation):
+        pass
+
+class ImageTransformer(IImageTransformer):
     def __init__(self):
         self.transformations = [IdentityTransformation()]
+
+    def add_transformation(self, transformation: Transformation):
+        self.transformations.append(transformation)
 
     def tansform_image(self, image: Image):
         for index, transformation in enumerate(self.transformations):
@@ -17,15 +27,15 @@ class ImageTransformerBuilder:
         self.image_transformer = ImageTransformer()
 
     def negate_image(self):
-        self.image_transformer.transformations.append(NegateTransformation())
+        self.image_transformer.add_transformation(NegateTransformation())
         return self
 
     def detect_edges(self):
-        self.image_transformer.transformations.append(EdgeDetectionTransformation())
+        self.image_transformer.add_transformation(EdgeDetectionTransformation())
         return self
 
     def flip_on_axis(self, axis: str):
-        self.image_transformer.transformations.append(FlipTransformation(axis))
+        self.image_transformer.add_transformation(FlipTransformation(axis))
         return self
 
     def flip_on_middle(self):

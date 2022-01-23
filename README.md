@@ -47,6 +47,8 @@ The program was written in Python using Tkinter for creating GUI, OpenCV-Python 
 
 ## Examples of program effects
 
+#### Example. 1 - No filters 
+![example1](https://github.com/WWykret/Webcam-Image-Transformer/blob/main/examples/example1.jpg)
 
 ## Status
 

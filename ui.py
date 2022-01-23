@@ -2,12 +2,13 @@ import tkinter as tk
 from PIL import ImageTk
 from camera import Camera
 from imageTransformers import IImageTransformer, ImageTransformerBuilder
-import os.path
+from imageSavers import IImageSaver
 
 class App:
-    def __init__(self, title: str, webcam: Camera, default_image_transformer: IImageTransformer):
+    def __init__(self, title: str, webcam: Camera, default_image_transformer: IImageTransformer, image_saver: IImageTransformer):
         self.webcam = webcam
         self.img_transformer = default_image_transformer
+        self.image_saver = image_saver
 
         self.root = tk.Tk()
         self.root.resizable(False, False)
@@ -35,14 +36,10 @@ class App:
 
     def save_image(self):
         counter = 0
-        
-        while os.path.isfile(f'images/camera_saved_{counter}.jpg'):
-            counter += 1
+        frame_to_save = self.webcam.get_camera_frame(self.img_transformer)
 
-        if not os.path.isdir('images'):
-            os.mkdir('images')
-        
-        self.webcam.get_camera_frame(self.img_transformer).save(f'images/camera_saved_{counter}.jpg')
+        while not self.image_saver.save_image(f'images/camera_saved_{counter}.jpg', frame_to_save):
+            counter += 1
 
     def update_img(self):
         new_cam_img = ImageTk.PhotoImage(self.webcam.get_camera_frame(self.img_transformer))

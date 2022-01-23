@@ -34,7 +34,11 @@ pip install numpy tk opencv-python pillow
 ```
 To get started with my program, navigate to a directory where you want to use the project, then clone it with:
 ```bash
-git clone 
+git clone https://github.com/WWykret/Webcam-Image-Transformer.git
+```
+or
+```bash
+git clone git@github.com:WWykret/Webcam-Image-Transformer.git
 ```
 If you don't want to use git clone for whatever reason, you can manually download it, and move the folder somewhere convenient. Then, open up your terminal, and go to the correct directory. Then just run the program:
 ```bash
@@ -49,6 +53,15 @@ The program was written in Python using Tkinter for creating GUI, OpenCV-Python 
 
 #### Example. 1 - No filters 
 ![example1](https://github.com/WWykret/Webcam-Image-Transformer/blob/main/examples/example1.jpg)
+
+#### Example. 2 - Horizontal flip 
+![example2](https://github.com/WWykret/Webcam-Image-Transformer/blob/main/examples/example2.jpg)
+
+#### Example. 3 - Horizontal flip and edge detection 
+![example3](https://github.com/WWykret/Webcam-Image-Transformer/blob/main/examples/example3.jpg)
+
+#### Example. 4 - Vertical flip and color inversion
+![example4](https://github.com/WWykret/Webcam-Image-Transformer/blob/main/examples/example4.jpg)
 
 ## Status
 

@@ -13,13 +13,13 @@ def bar2():
 
 root = tk.Tk()
 
-canvas = tk.Canvas(root, width = 400, height = 600)
-canvas.grid(columnspan=2)
+canvas = tk.Canvas(root, width = 400, height = 400)
+canvas.grid(columnspan=2, padx = 10, pady = 10)
 
 cam_img = ImageTk.PhotoImage(Image.open("wojak.gif").resize((400, 400)))
 cam_img_label = tk.Label(image=cam_img)
 cam_img_label.image = cam_img
-cam_img_label.grid(columnspan=2, column = 1, row = 0)
+cam_img_label.grid(columnspan=2, column = 0, row = 0)
 
 def foo():
     pass
@@ -30,22 +30,22 @@ showEdges = tk.IntVar()
 makeNegative = tk.IntVar()
 
 transformBox1 = tk.Checkbutton(root, text="Filp vertically", variable=flipX, onvalue=1, offvalue=0, command=foo)
-transformBox1.grid(column=0, row = 1)
+transformBox1.grid(column=0, row = 1, sticky = "w")
 
 transformBox2 = tk.Checkbutton(root, text="Filp horizontaly", variable=flipY, onvalue=1, offvalue=0, command=foo)
-transformBox2.grid(column=1, row = 1)
+transformBox2.grid(column=1, row = 1, sticky = "w")
 
 transformBox3 = tk.Checkbutton(root, text="Show edges", variable=showEdges, onvalue=1, offvalue=0, command=foo)
-transformBox3.grid(column=0, row = 2)
+transformBox3.grid(column=0, row = 2, sticky = "w")
 
 transformBox4 = tk.Checkbutton(root, text="Invert colors", variable=makeNegative, onvalue=1, offvalue=0, command=foo)
-transformBox4.grid(column=1, row = 2)
+transformBox4.grid(column=1, row = 2, sticky = "w")
 
 saveBtn = tk.Button(root, text="Save image", command=bar)
-saveBtn.grid(column=0, row=3)
+saveBtn.grid(column=0, row=3, sticky = "nesw")
 
 applyBtn = tk.Button(root, text="Apply filters", command=bar)
-applyBtn.grid(column=1, row=3)
+applyBtn.grid(column=1, row=3, sticky = "nesw")
 
 root.mainloop()
 
